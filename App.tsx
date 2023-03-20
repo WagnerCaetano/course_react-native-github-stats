@@ -1,8 +1,8 @@
-import { useCallback, useState } from "react";
-import { SafeAreaView, ScrollView } from "react-native";
-import CardList from "./components/CardList";
+import {StyleSheet, SafeAreaView, ScrollView, Platform, StatusBar  } from "react-native";
 import SearchBox from "./components/SearchBox";
 import User from "./components/User";
+import { useState, useCallback } from "react";
+import CardList from "./components/CardList";
 
 export type Data = {
   avatar_url: string;
@@ -12,21 +12,23 @@ export type Data = {
   public_repos: string | number;
 };
 
-export default function App() {
+const App= () => {
   const [data, setData] = useState<Data>();
 
   const search = useCallback((searchTerm: string) => {
-    if (searchTerm?.length <= 0) {
-      alert("Please enter something here");
+    if (searchTerm == "") {
+      alert("Please enter something");
       return;
     }
 
     fetch(`https://api.github.com/users/${searchTerm}`)
       .then((res) => res.json())
-      .then((data) => setData(data));
+      .then((data) => {
+        setData(data);
+      });
   }, []);
   return (
-    <SafeAreaView className="bg-black flex-1">
+    <SafeAreaView style={styles.AndroidSafeArea} className="bg-zinc-800 flex-1">
       <ScrollView
         keyboardShouldPersistTaps="handled"
         className="h-screen p-4 mx-auto"
@@ -34,13 +36,20 @@ export default function App() {
         <SearchBox onSearch={search} />
         {data && (
           <>
-            <User
-              src={data.avatar_url}
-              username={data.login}
-            /> <CardList data={data} />
+            <User src={data.avatar_url} username={data.login} />
+            <CardList data={data} />
           </>
         )}
       </ScrollView>
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  AndroidSafeArea: {
+    flex: 1,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+  }
+});
+
+export default App;

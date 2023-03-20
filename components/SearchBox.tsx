@@ -7,16 +7,16 @@ interface Props {
 
 const SearchBox = ({onSearch}: Props) => {
 
-    const [username, setUsername] = useState<string>("");
+    let [username, setUsername] = useState<string>("");
     return (
-      <View className="flex flex-row items-center space-x-4 mx-auto mt-20">
+      <View className="flex flex-row items-center space-x-4 mx-auto">
         <TextInput
           placeholder="Enter your username here..."
-          onChangeText={(text: string) => setUsername(text)}
-          className="border border-gray-100 p-2 w-2/3 text-gray-100"
+          onChangeText={(text: string) => {setUsername(text);}}
+          className="border border-white rounded p-2 w-2/3 text-gray-100 focus:border-2 focus:border-pruple-500"
           placeholderTextColor="#ffffff"
         />
-        <Pressable className="bg-sky-600 px-4 py-2 rounded" onPress={() => onSearch(username)}>
+        <Pressable className="bg-sky-600 px-4 py-2 rounded" onPress={() => { console.log(username);onSearch(username)}}>
             <Text className="text-gray-50">Search</Text>
         </Pressable>
       </View>
