@@ -2,7 +2,7 @@
 
 A React Native app to browse and search through GitHub Gists. The app allows you to view someone profile.
 
-![Gist App Screenshot](https://imgur.com/gallery/RQgSsg6)
+![Gist App Screenshot](https://i.imgur.com/qFLkix5.png)
 
 ## Table of Contents
 
